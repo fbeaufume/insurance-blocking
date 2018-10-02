@@ -1,0 +1,20 @@
+server:
+  port: 8081
+  # Tomcat threads count, for performance tests
+  #tomcat.max-threads: 10
+
+spring:
+  main:
+    banner-mode: "off"
+  data:
+    mongodb:
+      uri: mongodb://localhost/insurance
+
+logging:
+  # Uncomment this pattern when the AccessLogFilter is enabled
+  #pattern.level: %5p [requestId=%X{requestId}]
+  level:
+    ROOT: INFO
+    com.adeliosys: DEBUG
+    #org.springframework: DEBUG
+    #org.springframework.security: DEBUG

@@ -19,7 +19,7 @@ public class InsuranceBlocking {
      * Declare and map the access log filter.
      * <p>
      * Currently disabled since it does not work well for reactive requests.
-     * When enabled, also enable the right logging pattern in application.properties
+     * When enabled, also enable the right logging pattern in application.yml
      */
     //@Bean // Uncomment to enable
     public FilterRegistrationBean contextFilterRegistrationBean() {
