@@ -1,12 +1,14 @@
 package com.adeliosys.insurance;
 
-import com.adeliosys.insurance.web.AccessLogFilter;
+import com.adeliosys.insurance.web.BlockingLogFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Sample insurance application that provides insurance quotes.
@@ -16,17 +18,14 @@ import java.util.Arrays;
 public class InsuranceBlocking {
 
     /**
-     * Declare and map the access log filter.
-     * <p>
-     * Currently disabled since it does not work well for reactive requests.
-     * When enabled, also enable the right logging pattern in application.yml
+     * Declare and map the log filter.
      */
-    //@Bean // Uncomment to enable
-    public FilterRegistrationBean contextFilterRegistrationBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new AccessLogFilter());
-        registrationBean.setUrlPatterns(Arrays.asList("/*")); // Patterns from @WebFilter are not used by Spring
-        registrationBean.setOrder(2);
+    @Bean // Comment to disable
+    public FilterRegistrationBean<BlockingLogFilter> contextFilterRegistrationBean() {
+        FilterRegistrationBean<BlockingLogFilter> registrationBean = new FilterRegistrationBean<BlockingLogFilter>();
+        registrationBean.setFilter(new BlockingLogFilter());
+        registrationBean.setUrlPatterns(Collections.singletonList("/*")); // Patterns from @WebFilter are not used by Spring
+        registrationBean.setOrder(SecurityProperties.DEFAULT_FILTER_ORDER - 1); // Before Spring Security filter
         return registrationBean;
     }
 
